@@ -2,9 +2,15 @@ package com.betrybe.calcuradoradeidade.service;
 
 import com.betrybe.calcuradoradeidade.exception.FutureDateException;
 import com.betrybe.calcuradoradeidade.exception.InvalidSyntaxDateEx;
+import com.betrybe.calcuradoradeidade.exception.NonNumericDateException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import org.springframework.stereotype.Service;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 /**
  * Aqui nessa classe devem ser implementados os métodos para atender aos requisitos do exercício,
@@ -15,6 +21,7 @@ public class AgeCalculatorService {
 
   /** calculateAge. */
   public int calculateAge(String date) {
+    isDateNumeric(date);
     validateSyntax(date);
 
     LocalDate localDate = LocalDate.parse(date);
@@ -38,11 +45,15 @@ public class AgeCalculatorService {
     if (dateBlocks.length != 3) {
       throw new InvalidSyntaxDateEx();
     }
-    String year = dateBlocks[0];
-    String month = dateBlocks[1];
-    String day = dateBlocks[2];
-    if (year.length() != 4 || month.length() != 2 || day.length() != 2) {
-      throw new InvalidSyntaxDateEx();
+  }
+
+  public static void isDateNumeric(String input) {
+    input = input.replaceAll("-", "");
+    Pattern pattern = Pattern.compile("[0-9]+");
+    Matcher matcher = pattern.matcher(input);
+
+    if (!matcher.matches()) {
+      throw new NonNumericDateException();
     }
   }
 }
