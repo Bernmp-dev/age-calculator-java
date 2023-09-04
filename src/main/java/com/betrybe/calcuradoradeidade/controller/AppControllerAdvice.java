@@ -3,6 +3,7 @@ package com.betrybe.calcuradoradeidade.controller;
 import com.betrybe.calcuradoradeidade.dto.ErrorMessageDto;
 import com.betrybe.calcuradoradeidade.exception.FutureDateException;
 import com.betrybe.calcuradoradeidade.exception.InvalidSyntaxDateEx;
+import com.betrybe.calcuradoradeidade.exception.NonNumericDateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -18,9 +19,9 @@ public class AppControllerAdvice {
     return new ErrorMessageDto(exception.getMessage());
   }
 
-  @ExceptionHandler(InvalidSyntaxDateEx.class)
+  @ExceptionHandler({InvalidSyntaxDateEx.class, NonNumericDateException.class})
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ErrorMessageDto handleInvalidSyntaxDateEx(RuntimeException exception) {
+  public ErrorMessageDto handleBadRequest(RuntimeException exception) {
     return new ErrorMessageDto(exception.getMessage());
   }
 }
