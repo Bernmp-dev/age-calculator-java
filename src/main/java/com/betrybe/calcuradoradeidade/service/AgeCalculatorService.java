@@ -40,9 +40,12 @@ public class AgeCalculatorService {
     return -1;
   }
 
-  private void validateSyntax(String date) throws InvalidSyntaxDateEx {
-    String[] dateBlocks = date.split("-");
-    if (dateBlocks.length != 3) {
+  public static void validateSyntax(String dateStr) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    try {
+      LocalDate.parse(dateStr, formatter);
+    } catch (DateTimeParseException e) {
       throw new InvalidSyntaxDateEx();
     }
   }
