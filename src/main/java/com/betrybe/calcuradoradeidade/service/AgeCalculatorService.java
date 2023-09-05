@@ -7,9 +7,10 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import org.springframework.stereotype.Service;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.springframework.stereotype.Service;
+
 
 
 /**
@@ -35,6 +36,7 @@ public class AgeCalculatorService {
     return years;
   }
 
+  /** calculateAgeWithDefault. */
   public int calculateAgeWithDefault(String date, int defaultAge) {
     try {
       return calculateAge(date);
@@ -43,6 +45,7 @@ public class AgeCalculatorService {
     }
   }
 
+  /** validateSyntax. */
   public static void validateSyntax(String dateStr) {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -53,6 +56,7 @@ public class AgeCalculatorService {
     }
   }
 
+  /** isDateNumeric. */
   public static void isDateNumeric(String input) {
     input = input.replaceAll("-", "");
     Pattern pattern = Pattern.compile("[0-9]+");
